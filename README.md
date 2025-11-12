@@ -7,4 +7,4 @@ Having problems with the mod? Open up an issue! Or contact me in the [Lethal Com
 Open up a Pull Request! I will review it when I have time!
 
 # Wait how do I use this mod?
-Go to my [Thunderstore](https://thunderstore.io/c/lethal-company/p/bakzkndd/)!
+Go to it's [Thunderstore page](https://thunderstore.io/c/lethal-company/p/bakzkndd/UniqueSuits/)! Or go to my [Thunderstore profile](https://thunderstore.io/c/lethal-company/p/bakzkndd/) and check this and other mods out!
