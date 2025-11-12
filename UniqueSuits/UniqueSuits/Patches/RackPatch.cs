@@ -1,6 +1,8 @@
 using HarmonyLib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Services.Authentication.Generated;
 using UnityEngine;
 
 namespace UniqueSuits.Patches
@@ -10,11 +12,17 @@ namespace UniqueSuits.Patches
     {
         [HarmonyPatch("PositionSuitsOnRack")]
         [HarmonyPrefix]
-        [HarmonyPriority(Priority.High)]
+        [HarmonyPriority(Priority.HigherThanNormal)]
         [HarmonyAfter(UniqueSuits.MoreSuitsGUID)]
         static void PositionSuitsOnRackPatch(ref StartOfRound __instance)
         {
-            HashSet<int> suitsInUse = UniqueSuits.Instance.PlayerIDSuitIDs.Values.ToHashSet<int>();
+            if (UniqueSuits.IsTooManySuitsLoaded)
+            {
+                UniqueSuits.Logger.LogDebug("Too Many Suits detected, skipping...");
+                TooManySuitsPatch.DoIt();
+                return;
+            }
+            HashSet<int> suitsInUse = UniqueSuits.PlayerIDSuitIDs.Values.ToHashSet<int>();
             List<UnlockableSuit> suits = UnityEngine.Object.FindObjectsOfType<UnlockableSuit>().ToList<UnlockableSuit>();
             suits = suits.OrderBy(suit => suit.syncedSuitID.Value).ToList();
             int index = 0;

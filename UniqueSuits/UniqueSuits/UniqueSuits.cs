@@ -5,6 +5,7 @@ using BepInEx.Logging;
 using HarmonyLib;
 using LobbyCompatibility.Attributes;
 using LobbyCompatibility.Enums;
+using UniqueSuits.Patches;
 using UnityEngine;
 
 namespace UniqueSuits
@@ -12,21 +13,23 @@ namespace UniqueSuits
     [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
     [BepInDependency("BMX.LobbyCompatibility", BepInDependency.DependencyFlags.HardDependency)]
     [BepInDependency("x753.More_Suits", BepInDependency.DependencyFlags.HardDependency)]
+    [BepInDependency("TooManySuits", BepInDependency.DependencyFlags.SoftDependency)]
     [LobbyCompatibility(CompatibilityLevel.Everyone, VersionStrictness.None)]
     public class UniqueSuits : BaseUnityPlugin
     {
         public static UniqueSuits Instance { get; private set; } = null!;
         internal new static ManualLogSource Logger { get; private set; } = null!;
         internal static Harmony? Harmony { get; set; }
-        internal Dictionary<ulong, int> PlayerIDSuitIDs = new Dictionary<ulong, int>();
+        internal static Dictionary<ulong, int> PlayerIDSuitIDs = new Dictionary<ulong, int>();
         internal const string MoreSuitsGUID = "x753.More_Suits";
+        internal const string TooManySuitsGUID = "TooManySuits";
+        internal static bool IsTooManySuitsLoaded => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey(TooManySuitsGUID);
 
         private void Awake()
         {
             Logger = base.Logger;
             Instance = this;
 
-            NetcodePatcher();
             Patch();
 
             Logger.LogInfo($"{MyPluginInfo.PLUGIN_GUID} v{MyPluginInfo.PLUGIN_VERSION} has loaded!");
@@ -50,23 +53,6 @@ namespace UniqueSuits
             Harmony?.UnpatchSelf();
 
             Logger.LogDebug("Finished unpatching!");
-        }
-
-        private void NetcodePatcher()
-        {
-            var types = Assembly.GetExecutingAssembly().GetTypes();
-            foreach (var type in types)
-            {
-                var methods = type.GetMethods(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
-                foreach (var method in methods)
-                {
-                    var attributes = method.GetCustomAttributes(typeof(RuntimeInitializeOnLoadMethodAttribute), false);
-                    if (attributes.Length > 0)
-                    {
-                        method.Invoke(null, null);
-                    }
-                }
-            }
         }
     }
 }
