@@ -3,18 +3,14 @@ using System.Reflection;
 using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
-using LobbyCompatibility.Attributes;
-using LobbyCompatibility.Enums;
 using UniqueSuits.Patches;
 using UnityEngine;
 
 namespace UniqueSuits
 {
     [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
-    [BepInDependency("BMX.LobbyCompatibility", BepInDependency.DependencyFlags.HardDependency)]
     [BepInDependency("x753.More_Suits", BepInDependency.DependencyFlags.HardDependency)]
     [BepInDependency("TooManySuits", BepInDependency.DependencyFlags.SoftDependency)]
-    [LobbyCompatibility(CompatibilityLevel.Everyone, VersionStrictness.None)]
     public class UniqueSuits : BaseUnityPlugin
     {
         public static UniqueSuits Instance { get; private set; } = null!;
