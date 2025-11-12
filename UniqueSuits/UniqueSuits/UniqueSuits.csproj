@@ -4,15 +4,8 @@
     <PropertyGroup>
         <AssemblyName>bakzkndd.UniqueSuits</AssemblyName>
         <Product>UniqueSuits</Product>
+		<Version>1.0.0</Version>
     </PropertyGroup>
-
-    <!-- Set Mod Version with MinVer -->
-    <Target Name="SetModVersion" BeforeTargets="AddGeneratedFile" DependsOnTargets="MinVer">
-        <PropertyGroup>
-            <PlainVersion>$(MinVerMajor).$(MinVerMinor).$(MinVerPatch)</PlainVersion>
-            <BepInExPluginVersion>$(PlainVersion)</BepInExPluginVersion>
-        </PropertyGroup>
-    </Target>
 
     <!-- Project Properties -->
     <PropertyGroup>
