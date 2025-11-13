@@ -1,11 +1,10 @@
 {
   "name": "UniqueSuits",
-  "version_number": "1.0.1",
+  "version_number": "1.0.2",
   "website_url": "https://github.com/bakzkndd/UniqueSuits",
   "description": "Everyone is forced to get their own suits, no more confusion",
   "dependencies": [
     "BepInEx-BepInExPack-5.4.2100",
-    "BMX-LobbyCompatibility-1.5.1",
     "x753-More_Suits-1.5.2"
   ]
 }
